@@ -11,16 +11,19 @@ import { BigButton } from "./components/BigButton";
 import DraggableSignature from "./components/DraggableSignature";
 import DraggableText from "./components/DraggableText";
 import dayjs from "dayjs";
+import { saveAs } from 'file-saver';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function downloadURI(uri, name) {
-  var link = document.createElement("a");
-  link.download = name;
-  link.href = uri;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  let a= uri.split(',')[1];
+  saveAs(a, name);
+  // var link = document.createElement("a");
+  // link.download = name;
+  // link.href = uri;
+  // document.body.appendChild(link);
+  // link.click();
+  // document.body.removeChild(link);
 }
 
 function App() {
@@ -123,7 +126,6 @@ function App() {
                   inverted={true}
                   title={"Download"}
                   onClick={() => {
-                    console.log("pdf", pdf.split(",")[1]);
                     downloadURI(pdf, "CTYMJ23020201VAU0001_ProductionForm.pdf");
                   }}
                 />
@@ -240,12 +242,9 @@ function App() {
                         }
                       );
                     }
-
                     const pdfBytes = await pdfDoc.save();
-
                     const blob = new Blob([new Uint8Array(pdfBytes)]);
                     const URL = await blobToURL(blob);
-                    console.log("URL = ", URL);
                     setPdf(URL);
                     setPosition(null);
                     setSignatureURL(null);
@@ -264,7 +263,6 @@ function App() {
                   width={800}
                   height={1200}
                   onLoadSuccess={(data) => {
-                    console.log("DATA", data);
                     setPageDetails(data);
                   }}
                 />

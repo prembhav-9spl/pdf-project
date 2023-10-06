@@ -5,7 +5,6 @@ import { cleanBorder, errorColor, goodColor, primary45 } from "../utils/colors";
 import { useEffect } from "react";
 
 export default function DraggableSignature({ url, onEnd, onSet, onCancel }) {
-  console.log("URL", url);
   const styles = {
     container: {
       position: "absolute",
